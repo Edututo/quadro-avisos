@@ -1,0 +1,22 @@
+# Arquivo de serviço systemd alternativo ao PM2
+# Salve como: /etc/systemd/system/tv-bulletin-board.service
+
+[Unit]
+Description=TV Bulletin Board System
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/tv-bulletin-board
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=tv-bulletin-board
+
+[Install]
+WantedBy=multi-user.target
